@@ -15,4 +15,3 @@ yew = { version="0.20", features=["csr"] }
 wasm-bindgen = "0.2"
 web-sys = { version = "0.3.56", features = ["HtmlInputElement"] }
 emojis = "0.6.0"
-num-traits = "0.2.15"

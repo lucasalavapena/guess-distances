@@ -1,6 +1,5 @@
 
 use std::cmp::PartialEq;
-use num_traits::{Num, Float, Signed};
 use yew::{function_component, html, Html, Properties};
 
 #[derive(Properties, Default, Debug, Clone, PartialEq)]
