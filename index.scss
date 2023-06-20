@@ -1,0 +1,51 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  background: linear-gradient(to bottom right, #444444, #60edb3);
+  font-size: 1.5rem;
+}
+
+main {
+  color: #fff6d5;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.logo {
+  height: 20em;
+}
+
+.heart:after {
+  content: "❤️";
+
+  font-size: 1.75em;
+}
+
+h1 + .subtitle {
+  display: block;
+  margin-top: -1em;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-gap: 10px; /* Add gap between grid cells */
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+}
+
+.col {
+  padding: 10px;
+  background-color: lightgray;
+}

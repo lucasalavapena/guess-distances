@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <title>Earth Guessing Distance</title>
+    <link rel="stylesheet" href="/index-d298f028dd74103d.css">
+  
+<link rel="preload" href="/earth-distance-game-9cbe6e6df40b021c_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/earth-distance-game-9cbe6e6df40b021c.js"></head>
+<body>
+<script type="module">import init from '/earth-distance-game-9cbe6e6df40b021c.js';init('/earth-distance-game-9cbe6e6df40b021c_bg.wasm');</script><script>(function () {
+    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    var url = protocol + '//' + window.location.host + '/_trunk/ws';
+    var poll_interval = 5000;
+    var reload_upon_connect = () => {
+        window.setTimeout(
+            () => {
+                // when we successfully reconnect, we'll force a
+                // reload (since we presumably lost connection to
+                // trunk due to it being killed, so it will have
+                // rebuilt on restart)
+                var ws = new WebSocket(url);
+                ws.onopen = () => window.location.reload();
+                ws.onclose = reload_upon_connect;
+            },
+            poll_interval);
+    };
+
+    var ws = new WebSocket(url);
+    ws.onmessage = (ev) => {
+        const msg = JSON.parse(ev.data);
+        if (msg.reload) {
+            window.location.reload();
+        }
+    };
+    ws.onclose = reload_upon_connect;
+})()
+</script></body></html>
