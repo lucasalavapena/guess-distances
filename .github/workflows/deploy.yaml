@@ -1,4 +1,3 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy Yew site to Pages
 
 on:
@@ -31,13 +30,7 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    env:
-      HUGO_VERSION: 0.111.3
     steps:
-      - name: Set up Rust
-        uses: actions/setup-rust@v1
-        with:
-          rust-version: stable
       - name: Install Wasm target
         run: rustup target add wasm32-unknown-unknown
       - name: Checkout
