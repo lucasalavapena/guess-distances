@@ -2,9 +2,9 @@ use std::fmt;
 use yew::Properties;
 
 use csv::{Reader, ReaderBuilder};
+use gloo::console::log;
 use std::error::Error;
 use std::fs::File;
-use gloo::console::log;
 
 // use yew::{function_component, html, Html, Properties};
 use crate::traits::ChangeAngle;
@@ -41,10 +41,9 @@ fn radians_to_degrees(angle: f64) -> f64 {
     angle.to_degrees()
 }
 
-
 impl ChangeAngle for Coord {
     fn change_unit(&self) -> Self {
-        let (new_type, conversion_func): (AngleUnit, fn(f64) -> f64) = match (self.type_) {
+        let (new_type, conversion_func): (AngleUnit, fn(f64) -> f64) = match self.type_ {
             AngleUnit::Degrees => (AngleUnit::Radians, degrees_to_radians),
             AngleUnit::Radians => (AngleUnit::Degrees, radians_to_degrees),
         };
@@ -72,11 +71,10 @@ pub struct City {
     pub continent_name: String,
 }
 
-impl City{
+impl City {
     pub fn full_name(&self) -> String {
         format!("{}, {}", self.city_name, self.country_name)
     }
-    
 }
 
 impl Default for City {

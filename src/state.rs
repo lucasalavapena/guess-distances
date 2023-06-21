@@ -23,7 +23,6 @@ pub struct CityState {
 //     }
 // }
 
-
 impl CityState {
     pub fn get_city_pair(&self) -> Option<(City, City)> {
         if self.cities.is_empty() {
@@ -34,5 +33,3 @@ impl CityState {
         Some((first_city, second_city))
     }
 }
-
-

@@ -2,7 +2,6 @@ mod app;
 mod components;
 mod geo;
 mod state;
-mod stats;
 mod traits;
 
 use yew::prelude::*;
