@@ -90,6 +90,7 @@ impl Component for App {
                     self.guess_state.expected_answer,
                 ) = App::compute_new_triplet(&self.city_state.cities);
                 self.guess_state.has_guessed = false;
+                self.guess_state.current_input = String::from("");
 
                 true // Return true to cause the displayed change to update
             }

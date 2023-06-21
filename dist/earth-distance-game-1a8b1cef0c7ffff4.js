@@ -676,11 +676,11 @@ function __wbg_get_imports() {
         const ret = wasm.memory;
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper5135 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper5136 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 367, __wbg_adapter_26);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper5233 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper5234 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 391, __wbg_adapter_29);
         return addHeapObject(ret);
     };
@@ -723,7 +723,7 @@ async function __wbg_init(input) {
     if (wasm !== undefined) return wasm;
 
     if (typeof input === 'undefined') {
-        input = new URL('earth-distance-game-de829e2754406a81_bg.wasm', import.meta.url);
+        input = new URL('earth-distance-game-1a8b1cef0c7ffff4_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
