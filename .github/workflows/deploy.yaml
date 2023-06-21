@@ -33,6 +33,8 @@ jobs:
     steps:
       - name: Install Wasm target
         run: rustup target add wasm32-unknown-unknown
+      - name: Install trunk
+        run: cargo install trunk
       - name: Checkout
         uses: actions/checkout@v3
         with:
