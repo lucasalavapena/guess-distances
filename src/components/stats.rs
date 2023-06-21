@@ -37,9 +37,9 @@ pub fn stats_component(props: &Props) -> Html {
             <h2 class="subtitle is-4"> {"Game Statistics"}</h2>
                 <div id="stats-container" class="box">
                     <p><strong>{"Total Guesses: "}</strong> <span id="total-games"> {props.count} </span></p>
-                    <p><strong> {"Mean ABS Error : "}</strong> <span id="mean-abs-error"> {props.mean_abs_err}{" km"}</span></p>
-                    <p><strong>{"Last Error: "}</strong> <span id="last-error"> {last_guess} </span></p>
-                    <p><strong>{"Mean Normalised Score: "} </strong> <span id="score"> {props.score_mean} </span></p>
+                    <p><strong> {"Mean ABS Error : "}</strong> <span id="mean-abs-error"> {format!("{:.2}", props.mean_abs_err)}{" km"}</span></p>
+                    <p><strong>{"Last Error: "}</strong> <span id="last-error"> {format!("{:.2}", last_guess)} </span></p>
+                    <p><strong>{"Mean Normalised Score: "} </strong> <span id="score"> {format!("{:.2}", props.score_mean)} </span></p>
                 </div>
             </div>
         </section>

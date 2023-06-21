@@ -42,32 +42,13 @@ pub fn CitiesPair(props: &Props) -> Html {
     let flag_b = get_flag_from_country_code(props.city_b.country_code);
 
     html! {
+            <div id="game-container" class="box custom-box">
+                <div id="question-container" class="mb-4">
+                <h2 class="subtitle is-4"> {"Guess the distance:"}</h2>
+                    <p id="question-text" class="title is-3"> {flag_a} {" "} {props.city_a.full_name().clone()}</p>
+                    <p id="question-text" class="title is-3"> {flag_b} {" "} {props.city_b.full_name().clone()}</p>
 
-        <>
-        // <section class="section">
-
-        //     <div class="container">
-                <div id="game-container" class="box custom-box">
-                    <div id="question-container" class="mb-4">
-                    <h2 class="subtitle is-4"> {"Guess the distance:"}</h2>
-                        <p id="question-text" class="title is-3"> {flag_a} {" "} {props.city_a.full_name().clone()}</p>
-                        <p id="question-text" class="title is-3"> {flag_b} {" "} {props.city_b.full_name().clone()}</p>
-
-                    </div>
                 </div>
-            // </div>
-            // </section>
-
-
-            // <div class="row">
-            //     <div class="col">  {flag_a} {" "} {props.city_a.full_name().clone()} </div>
-            //     <div class="col">  {flag_b} {" "} {props.city_b.full_name().clone()} </div>
-            //     // <div class="col"> </div>
-
-            // </div>
-            // <div class="row">
-            // // <div class="col"> {props.city_b.coordinates}</div>
-            // </div>
-        </>
+            </div>
     }
 }

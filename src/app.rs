@@ -46,12 +46,12 @@ impl Component for App {
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        let Citys_from_csv = load_cities_from_str(include_str!("../static/capitals.csv"));
+        let cities_from_csv = load_cities_from_str(include_str!("../static/capitals.csv"));
 
-        if let Ok(cities) = Citys_from_csv {
+        if let Ok(cities) = cities_from_csv {
             let cities_rad: Vec<City> = cities.iter().map(|c: &City| c.change_unit()).collect();
             let no_captials = cities.len();
-            log!("Successfully loaded {} Citys", no_captials);
+            log!("Successfully loaded no cities: ", no_captials);
 
             let (first_location_idx, second_location_idx, expected_answer) =
                 App::compute_new_triplet(&cities_rad);
@@ -94,16 +94,6 @@ impl Component for App {
 
                 true // Return true to cause the displayed change to update
             }
-            // Msg::NextRound => {
-            //     (
-            //         self.city_state.first_location_idx,
-            //         self.city_state.second_location_idx,
-            //         self.guess_state.expected_answer,
-            //     ) = App::compute_new_triplet(&self.city_state.cities);
-            //     self.guess_state.has_guessed = false;
-
-            //     true
-            // }
             Msg::InputValue(val) => {
                 self.guess_state.current_input = val;
                 true
@@ -145,21 +135,6 @@ impl Component for App {
                         <div class="container">
                             <CitiesPair city_a={first_city} city_b={second_city} />
                         </div>
-                        <div id="input-container" class="field has-addons">
-                            // <div class="control is-expanded">
-                            //     <input
-                            //         id="city-input"
-                            //         class="input is-medium"
-                            //         placeholder={"Enter your guess in km:"}
-                            //         type="number"
-                            //         value={self.guess_state.current_input.clone()}
-                            //         oninput={oninput}
-                            //     />
-                            // </div>
-                            // <div class="control">
-                            //     <button id="submit-button" class="button is-primary is-medium">{"Submit"}</button>
-                            // </div>
-                        </div>
 
                         <form onsubmit={onsubmit} class="form has-addons">
                             <div class="control is-expanded">
@@ -173,7 +148,6 @@ impl Component for App {
                                 />
                             </div>
                         </form>
-                        // <button type="submit" onclick={ctx.link().callback(|_| Msg::NextRound)}>{"Next"}</button>
                     </div>
                 </section>
 
