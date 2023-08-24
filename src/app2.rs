@@ -1,3 +1,4 @@
+// file:///home/lap/Repos/earth-distance-game/src/app.rs {"mtime":1688245716395,"ctime":1687264384942,"size":7399,"etag":"3ap6jpjfp7ll","orphaned":false,"typeId":""}
 use std::rc::Rc;
 
 use cities_common::models::City;
@@ -39,7 +40,7 @@ pub enum Msg {
     ResetStats,
 }
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, PartialEq)]
 pub struct App {
     pub cities_state: Option<state::CitiesState>,
     client: Client,
@@ -62,7 +63,7 @@ impl Component for App {
         let offby_km = Stats::load(StatsType::Offby);
         let normalised_score = Stats::load(StatsType::Normalised);
 
-        let val = CitiesState::new(client.clone(), settings.query.clone());
+        let val = CitiesState::get_new_state(client.clone(), settings.query.clone());
 
 
         _ctx.link().send_future(val.map(Msg::SetCities));
