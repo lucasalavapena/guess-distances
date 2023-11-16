@@ -28,6 +28,7 @@ impl Settings {
             point: Some(wkt_point),
             minimum_population: Some(min_population),
             limit: Some(2),
+            sort_by_random: Some(true),
             ..Default::default()
         };
 
@@ -61,7 +62,7 @@ impl Default for Settings {
                 type_: AngleUnit::Degrees,
             },
             2_000_000,
-            5_000_000,
+            1_000_000,
         )
     }
 }

@@ -1,3 +1,9 @@
+use std::future::Future;
+use std::sync::Arc;
+use reqwest;
+
+use gloo::console::log;
+
 // file:///home/lap/Repos/earth-distance-game/src/state.rs {"mtime":1687728020594,"ctime":1687270405718,"size":1981,"etag":"3aoacr1of21s","orphaned":false,"typeId":""}
 use cities_common::models::City;
 use cities_client::client::Client;
@@ -32,26 +38,56 @@ pub struct CitiesState {
 // }
 
 impl CitiesState {
-    pub fn new(client: &Client, cities_query: &CitiesQuery) -> Result<Self, reqwest::Error>  {
-        let cities = client.get_cities(cities_query).await;
-        let [first_city, second_city] = &cities[..];
+   
+    // pub async fn new(client: Arc<Client>, cities_query: CitiesQuery) -> Result<Self, reqwest::Error>  {
+    //     let cities = client.get_cities(&cities_query).await?;
+    //     let first_city = &cities[0];
+    //     let second_city = &cities[1];
+
+    //     let distance_query = DistQuery{
+    //         city_id1: first_city.id,
+    //         city_id2: second_city.id,
+
+    //     };
+    //     let expected_distance = client.get_distance(&distance_query).await?;
+
+
+    //     Ok::<Self, reqwest::Error>(Self {
+    //         first_city: first_city.clone(),
+    //         second_city: second_city.clone(),
+    //         expected_distance,
+
+    //     })
+    // }
+
+    pub async fn new(client: Arc<Client>, cities_query: CitiesQuery) -> Self  {
+        let cities = client.get_cities(&cities_query).await.unwrap();
+        
+        for i in 0..cities.len() {
+            log!("{cities:?}", cities[i].clone().name);
+        }
+
+        let first_city = &cities[0];
+        let second_city = &cities[1];
+
+
         let distance_query = DistQuery{
             city_id1: first_city.id,
             city_id2: second_city.id,
 
         };
-        let expected_distance = client.get_distance(&distance_query)?;
+        let expected_distance = client.get_distance(&distance_query).await.unwrap();
 
 
-        Ok(Self {
+        Self {
             first_city: first_city.clone(),
-            second_city: second_city,
+            second_city: second_city.clone(),
             expected_distance,
 
-        })
+        }
     }
 
-    // pub fn get_city_pair(&self) -> Option<(City, City)> {
+    // pub fn get_new_state(&self) -> impl Future<Output = Result<Self, reqwest::Error>> {
 
     //     pub first_city: Option<City>,
     //     pub second_city: Option<City>,
@@ -65,11 +101,4 @@ impl CitiesState {
     // }
 
 }
-
-
-
-// #[test]
-// fn test_stuff() {
-//     get_random_cities(Settings::default());
-// }
 

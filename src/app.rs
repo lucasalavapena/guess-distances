@@ -1,4 +1,5 @@
 use std::rc::Rc;
+use std::sync::Arc;
 
 use cities_common::models::City;
 use gloo::console::log;
@@ -8,9 +9,9 @@ use yew::{html, Component, Context, Html};
 // use futures::{FutureExt, StreamExt};
 
 use cities_client::client::Client;
-use futures_util::FutureExt;
+use futures_util::future::FutureExt;
 
-use crate::geo::score;
+use crate::geo::{score, Coord, AngleUnit};
 
 use crate::components::cities::CitiesPair;
 use crate::components::stats::{Stats, StatsComponent, StatsType};
@@ -42,7 +43,7 @@ pub enum Msg {
 #[derive(Default, Debug)]
 pub struct App {
     pub cities_state: Option<state::CitiesState>,
-    client: Client,
+    client: Arc<Client>,
     guess_state: state::GuessState,
     settings: Settings,
     mode: Mode,
@@ -56,16 +57,26 @@ impl Component for App {
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        let client = Client::default();
-        let settings = Settings::load();
+        let client = Arc::new(Client::default());
+        let settings = Settings::new(
+            Coord {
+                latitude: 52.520332,
+                longitude: 13.398326,
+                type_: AngleUnit::Degrees,
+            },            2_000_000,
+            1_000_000,)
+            ;
+        Settings::store(&settings);
         
         let offby_km = Stats::load(StatsType::Offby);
         let normalised_score = Stats::load(StatsType::Normalised);
 
         let val = CitiesState::new(client.clone(), settings.query.clone());
 
-
+        // todo look into the map?
+        // _ctx.link().send_future( async{let res = val.await.unwrap();Msg::SetCities(res)});
         _ctx.link().send_future(val.map(Msg::SetCities));
+
         Self {
             cities_state: None,
             client,
@@ -91,8 +102,12 @@ impl Component for App {
 
                 self.guess_state.has_guessed = true;
                 let val =
-                    CitiesState::get_new_state(self.client.clone(), self.settings.query.clone());
+                    CitiesState::new(self.client.clone(), self.settings.query.clone());
+                
+                // _ctx.link().send_future( async{let res = val.await.unwrap();Msg::SetCities(res)});
                 _ctx.link().send_future(val.map(Msg::SetCities));
+
+
                 self.guess_state.has_guessed = false;
                 self.guess_state.current_input = String::from("");
 
@@ -111,11 +126,12 @@ impl Component for App {
                 true
             }
             Msg::ResetStats => {
-                // Stats::remove(StatsType::Offby);
-                // Stats::remove(StatsType::Normalised);
+                Stats::remove(StatsType::Offby);
+                Stats::remove(StatsType::Normalised);
 
                 self.offby_km = Stats::load(StatsType::Offby);
                 self.normalised_score = Stats::load(StatsType::Normalised);
+                true
             }
             Msg::UpdateSettings(val) => {
                 self.settings = (*val).clone();
@@ -170,7 +186,7 @@ impl Component for App {
             }
         }
 
-        let reset_stats = ctx.link().callback(Msg::ResetStats);
+        let reset_stats = ctx.link().callback(|_| Msg::ResetStats);
 
 
         let relevant_section = match self.mode {
@@ -217,7 +233,7 @@ impl Component for App {
 
                 {relevant_section}
 
-                <StatsComponent mean_abs_err={self.offby_km.arithemetic_mean} score_mean={self.normalised_score.arithemetic_mean} count={self.normalised_score.wrong_by.len()}last_guess={prev_guess_wrong_by} />
+                <StatsComponent mean_abs_err={self.offby_km.arithemetic_mean} score_mean={self.normalised_score.arithemetic_mean} count={self.normalised_score.wrong_by.len()} last_guess={prev_guess_wrong_by} reset_click={reset_stats}/>
             </body>
 
         }
