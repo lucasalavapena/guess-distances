@@ -82,15 +82,12 @@ pub fn stats_component(props: &Props) -> Html {
         let settings_state = settings_state.clone();
         Callback::from(move |e: InputEvent| {
             let input: HtmlInputElement = e.target_unchecked_into();
-            let settings = (**settings_state).clone();
-            match input.value().parse::<f64>() {
-                Ok(lat) => settings_state.set(Rc::new(Settings::new(
-                    Coord::new(lat, settings.point.longitude),
-                    settings.radius,
-                    settings.min_population,
-                ))),
-                Err(_) => {}
-            }
+            let settings: Settings = (**settings_state).clone();
+            if let Ok(lat) = input.value().parse::<f64>() { settings_state.set(Rc::new(Settings::new(
+                Coord::new(lat, settings.point.longitude),
+                settings.radius,
+                settings.min_population,
+            ))) }
         })
     };
 
@@ -99,14 +96,11 @@ pub fn stats_component(props: &Props) -> Html {
         Callback::from(move |e: InputEvent| {
             let input: HtmlInputElement = e.target_unchecked_into();
             let settings = (**settings_state).clone();
-            match input.value().parse::<f64>() {
-                Ok(longitude) => settings_state.set(Rc::new(Settings::new(
-                    Coord::new(settings.point.latitude, longitude),
-                    settings.radius,
-                    settings.min_population,
-                ))),
-                Err(_) => {}
-            }
+            if let Ok(longitude) = input.value().parse::<f64>() { settings_state.set(Rc::new(Settings::new(
+                Coord::new(settings.point.latitude, longitude),
+                settings.radius,
+                settings.min_population,
+            ))) }
         })
     };
 
@@ -151,27 +145,27 @@ pub fn stats_component(props: &Props) -> Html {
             <div class="field">
                 <label class="label">{"Latitude in Degree"}</label>
                 <div class="control">
-                    <input class="input" type="number" step="any" min="-90" max="90" value={(**settings_state).point.latitude.to_string()}  placeholder="Enter the Latitude in Degrees"  oninput={oninput_lat} />
+                    <input class="input" type="number" step="any" min="-90" max="90" value={(settings_state).point.latitude.to_string()}  placeholder="Enter the Latitude in Degrees"  oninput={oninput_lat} />
                 </div>
             </div>
             <div class="field">
             <label class="label">{"longitude in Degree"}</label>
             <div class="control">
-                <input class="input" type="number" step="any" min="-180" max="180"  value={(**settings_state).point.longitude.to_string()} placeholder="Enter the Longitude in Degrees" oninput={oninput_long}/>
+                <input class="input" type="number" step="any" min="-180" max="180"  value={(settings_state).point.longitude.to_string()} placeholder="Enter the Longitude in Degrees" oninput={oninput_long}/>
             </div>
         </div>
 
             <div class="field">
                 <label class="label">{"Radius [km]"}</label>
                 <div class="control">
-                    <input class="input" type="number" placeholder="Enter the radius in km" value={(**settings_state).radius.to_string()} oninput={oninput_radius} />
+                    <input class="input" type="number" placeholder="Enter the radius in km" value={(settings_state).radius.to_string()} oninput={oninput_radius} />
                 </div>
             </div>
 
             <div class="field">
                 <label class="label">{"Minimum Population [ks]"}</label>
                 <div class="control">
-                    <input class="input" type="number" placeholder="Enter the minimum population in thousands" value={(**settings_state).min_population.to_string()} oninput={oninput_min_pop} />
+                    <input class="input" type="number" placeholder="Enter the minimum population in thousands" value={(settings_state).min_population.to_string()} oninput={oninput_min_pop} />
                 </div>
             </div>
 

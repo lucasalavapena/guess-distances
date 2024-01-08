@@ -1,16 +1,8 @@
-use std::future::Future;
 use std::sync::Arc;
-use reqwest;
 
-use gloo::console::log;
-
-// file:///home/lap/Repos/earth-distance-game/src/state.rs {"mtime":1687728020594,"ctime":1687270405718,"size":1981,"etag":"3aoacr1of21s","orphaned":false,"typeId":""}
 use cities_common::models::City;
 use cities_client::client::Client;
 use cities_common::queries::{DistQuery, CitiesQuery};
-
-
-use crate::components::settings::Settings;
 
 #[derive(Default, Debug, Clone, PartialEq)]
 pub struct GuessState {
@@ -63,9 +55,6 @@ impl CitiesState {
     pub async fn new(client: Arc<Client>, cities_query: CitiesQuery) -> Self  {
         let cities = client.get_cities(&cities_query).await.unwrap();
         
-        for i in 0..cities.len() {
-            log!("{cities:?}", cities[i].clone().name);
-        }
 
         let first_city = &cities[0];
         let second_city = &cities[1];
