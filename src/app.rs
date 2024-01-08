@@ -209,7 +209,7 @@ impl Component for App {
                                             <input
                                                 id="city-input"
                                                 class="input is-medium"
-                                                placeholder={"Enter your guess in km:"}
+                                                placeholder={"Enter your guess in km"}
                                                 type="number"
                                                 value={self.guess_state.current_input.clone()}
                                                 oninput={oninput}

@@ -142,27 +142,27 @@ pub fn stats_component(props: &Props) -> Html {
     html! {
         <div>
             <div class="field">
-                <label class="label">{"Latitude in Degree"}</label>
+                <label class="label">{"Latitude in Degrees"}</label>
                 <div class="control">
                     <input class="input" type="number" step="any" min="-90" max="90" value={(settings_state).point.latitude.to_string()}  placeholder="Enter the Latitude in Degrees"  oninput={oninput_lat} />
                 </div>
             </div>
             <div class="field">
-            <label class="label">{"longitude in Degree"}</label>
+            <label class="label">{"Longitude in Degrees"}</label>
             <div class="control">
                 <input class="input" type="number" step="any" min="-180" max="180"  value={(settings_state).point.longitude.to_string()} placeholder="Enter the Longitude in Degrees" oninput={oninput_long}/>
             </div>
         </div>
 
             <div class="field">
-                <label class="label">{"Radius [km]"}</label>
+                <label class="label">{"Radius [m]"}</label>
                 <div class="control">
-                    <input class="input" type="number" placeholder="Enter the radius in km" value={(settings_state).radius.to_string()} oninput={oninput_radius} />
+                    <input class="input" type="number" placeholder="Enter the radius in m" value={(settings_state).radius.to_string()} oninput={oninput_radius} />
                 </div>
             </div>
 
             <div class="field">
-                <label class="label">{"Minimum Population [ks]"}</label>
+                <label class="label">{"Minimum Population"}</label>
                 <div class="control">
                     <input class="input" type="number" placeholder="Enter the minimum population in thousands" value={(settings_state).min_population.to_string()} oninput={oninput_min_pop} />
                 </div>
