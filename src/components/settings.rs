@@ -139,7 +139,6 @@ pub fn stats_component(props: &Props) -> Html {
         Callback::from(move |_e: MouseEvent| settings_submit.emit((*settings_state_c).clone()))
     };
 
-    // let welp = (**settings_state).point.latitude;
     html! {
         <div>
             <div class="field">

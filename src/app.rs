@@ -194,8 +194,9 @@ impl Component for App {
                 log!("playing mode");
                 html! {
                             <>
+    
                             <div class="settings-icon">
-                                <i onclick={ctx.link().callback(|_| Msg::ChangeMode(Mode::Setting))} class="fas fa-cog"></i>
+                                <i onclick={ctx.link().callback(|_| Msg::ChangeMode(Mode::Setting))} class="fa fa-cog"></i>
                             </div>
                             <section class="section">
                                 <div>
